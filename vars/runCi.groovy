@@ -138,25 +138,13 @@ def call(Map config = [:]) {
         '''
 
         archiveArtifacts(
-            artifacts: '''
-                test-summary.html,
-                sonar-summary.html,
-                trivy-fs-report.html,
-                trivy-img-report.html,
-                security-report.html
-            ''',
+            artifacts: '**/*.html',
             allowEmptyArchive: true
         )
 
         stash(
             name: 'ci-reports-premain',
-            includes: '''
-                test-summary.html,
-                sonar-summary.html,
-                trivy-fs-report.html,
-                trivy-img-report.html,
-                security-report.html
-            '''
+            includes: '**/*.html'
         )
     }
 }

@@ -137,6 +137,10 @@ def call(Map config = [:]) {
             [ -f security-report.html ] || \
                 echo "<html><body><h1>Security Report Missing</h1></body></html>" \
                 > security-report.html
+
+            [ -f dependency-check-report.html ] || \
+                echo "<html><body><h1>Dependency Check Report Missing</h1></body></html>" \
+                > dependency-check-report.html
         '''
 
         archiveArtifacts(

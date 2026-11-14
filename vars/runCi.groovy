@@ -106,6 +106,14 @@ def call(Map config = [:]) {
                 ./scripts/ci-security-checks.sh
             '''
         }
+
+        stage('OWASP Dependency Check') {
+            sh '''
+                export JAVA_HOME="$CI_JAVA_HOME"
+                export PATH="$JAVA_HOME/bin:$PATH"
+                ./scripts/ci-owasp.sh || true
+            '''
+        }
     }
 
     stage('Consolidate & Stash CI Reports') {
@@ -117,6 +125,9 @@ def call(Map config = [:]) {
 
             cp reports/sonar-summary.html \
                 ./sonar-summary.html 2>/dev/null || true
+
+            cp reports/dependency-check-report.html \
+                ./dependency-check-report.html 2>/dev/null || true
 
             [ -f test-summary.html ] || \
                 echo "<html><body><h1>Test Summary Missing</h1></body></html>" \
